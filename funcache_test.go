@@ -10,53 +10,53 @@ func fib(in int) int {
 }
 
 func TestCacheFunWithLru(t *testing.T) {
-	wrapped := func(in []interface{}) ([]interface{}, error){
+	wrapped := func(in []interface{}) ([]interface{}, error) {
 		res := []interface{}{
 			fib(in[0].(int)),
 		}
 		return res, nil
 	}
 	wrapper := CacheFunWithLru(32, wrapped, 3)
-	if out, err:=wrapper([]interface{}{40});out[0].(int)!=fib(40) || err!=nil{
+	if out, err := wrapper([]interface{}{40}); out[0].(int) != fib(40) || err != nil {
 		t.Errorf("expect %d got %d with %v", fib(40), out[0].(int), err)
 	}
 }
 
 func TestCacheFunWithLfu(t *testing.T) {
-	wrapped := func(in []interface{}) ([]interface{}, error){
+	wrapped := func(in []interface{}) ([]interface{}, error) {
 		res := []interface{}{
 			fib(in[0].(int)),
 		}
 		return res, nil
 	}
 	wrapper := CacheFunWithLfu(32, wrapped, 3)
-	if out, err:=wrapper([]interface{}{40});out[0].(int)!=fib(40) || err!=nil{
+	if out, err := wrapper([]interface{}{40}); out[0].(int) != fib(40) || err != nil {
 		t.Errorf("expect %d got %d with %v", fib(40), out[0].(int), err)
 	}
 }
 
 func TestCacheFunWithArc(t *testing.T) {
-	wrapped := func(in []interface{}) ([]interface{}, error){
+	wrapped := func(in []interface{}) ([]interface{}, error) {
 		res := []interface{}{
 			fib(in[0].(int)),
 		}
 		return res, nil
 	}
 	wrapper := CacheFunWithArc(32, wrapped, 3)
-	if out, err:=wrapper([]interface{}{40});out[0].(int)!=fib(40) || err!=nil{
+	if out, err := wrapper([]interface{}{40}); out[0].(int) != fib(40) || err != nil {
 		t.Errorf("expect %d got %d with %v", fib(40), out[0].(int), err)
 	}
 }
 
 func BenchmarkRawFib40(b *testing.B) {
-	for i:=0;i<b.N;i++{
+	for i := 0; i < b.N; i++ {
 		fib(40)
 	}
 }
 
 func BenchmarkCacheFunWithLruFib40(b *testing.B) {
 	b.StopTimer()
-	wrapped := func(in []interface{}) ([]interface{}, error){
+	wrapped := func(in []interface{}) ([]interface{}, error) {
 		res := []interface{}{
 			fib(in[0].(int)),
 		}
@@ -64,8 +64,8 @@ func BenchmarkCacheFunWithLruFib40(b *testing.B) {
 	}
 	wrapperFib := CacheFunWithLru(64, wrapped, 3)
 	b.StartTimer()
-	for i:=0;i<b.N;i++{
-		if out, err:=wrapperFib([]interface{}{40});out[0].(int)!=165580141 || err!=nil{
+	for i := 0; i < b.N; i++ {
+		if out, err := wrapperFib([]interface{}{40}); out[0].(int) != 165580141 || err != nil {
 			b.Errorf("expect %d got %d with %v", 165580141, out[0].(int), err)
 		}
 	}
@@ -73,7 +73,7 @@ func BenchmarkCacheFunWithLruFib40(b *testing.B) {
 
 func BenchmarkCacheFunWithLfuFib40(b *testing.B) {
 	b.StopTimer()
-	wrapped := func(in []interface{}) ([]interface{}, error){
+	wrapped := func(in []interface{}) ([]interface{}, error) {
 		res := []interface{}{
 			fib(in[0].(int)),
 		}
@@ -81,8 +81,8 @@ func BenchmarkCacheFunWithLfuFib40(b *testing.B) {
 	}
 	wrapperFib := CacheFunWithLfu(64, wrapped, 3)
 	b.StartTimer()
-	for i:=0;i<b.N;i++{
-		if out, err:=wrapperFib([]interface{}{40});out[0].(int)!=165580141 || err!=nil{
+	for i := 0; i < b.N; i++ {
+		if out, err := wrapperFib([]interface{}{40}); out[0].(int) != 165580141 || err != nil {
 			b.Errorf("expect %d got %d with %v", 165580141, out[0].(int), err)
 		}
 	}
@@ -90,7 +90,7 @@ func BenchmarkCacheFunWithLfuFib40(b *testing.B) {
 
 func BenchmarkCacheFunWithArcFib16(b *testing.B) {
 	b.StopTimer()
-	wrapped := func(in []interface{}) ([]interface{}, error){
+	wrapped := func(in []interface{}) ([]interface{}, error) {
 		res := []interface{}{
 			fib(in[0].(int)),
 		}
@@ -98,8 +98,8 @@ func BenchmarkCacheFunWithArcFib16(b *testing.B) {
 	}
 	wrapperFib := CacheFunWithArc(64, wrapped, 3)
 	b.StartTimer()
-	for i:=0;i<b.N;i++{
-		if out, err:=wrapperFib([]interface{}{40});out[0].(int)!=165580141 || err!=nil{
+	for i := 0; i < b.N; i++ {
+		if out, err := wrapperFib([]interface{}{40}); out[0].(int) != 165580141 || err != nil {
 			b.Errorf("expect %d got %d with %v", 165580141, out[0].(int), err)
 		}
 	}
