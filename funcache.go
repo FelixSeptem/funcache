@@ -14,13 +14,13 @@ import (
 type WrappedFun func([]interface{}) ([]interface{}, error)
 
 // cache interface to get and set data use cache
-type Cache interface {
+type cache interface {
 	Set(key, value interface{}) bool
 	Get(key interface{}) (interface{}, bool)
 }
 
 // input an array or a slice convert to a slice
-func ToSlice(in interface{}) interface{} {
+func toSlice(in interface{}) interface{} {
 	a := reflect.ValueOf(in)
 	if a.Kind() == reflect.Slice {
 		return in
@@ -35,7 +35,7 @@ func ToSlice(in interface{}) interface{} {
 }
 
 // input a slice or an array convert to an array
-func ToArray(in interface{}) interface{} {
+func toArray(in interface{}) interface{} {
 	s := reflect.ValueOf(in)
 	if s.Kind() == reflect.Array {
 		return in
@@ -50,11 +50,11 @@ func ToArray(in interface{}) interface{} {
 }
 
 // use given cache to cache expensive operate results
-func CachedFun(wrapped WrappedFun, retries int, cache Cache) WrappedFun {
+func CachedFun(wrapped WrappedFun, retries int, cache cache) WrappedFun {
 	return func(in []interface{}) ([]interface{}, error) {
-		key := ToArray(in)
+		key := toArray(in)
 		if out, ok := cache.Get(key); ok {
-			result := ToSlice(out)
+			result := toSlice(out)
 			return result.([]interface{}), nil
 		}
 		var (
