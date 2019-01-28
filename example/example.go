@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/FelixSeptem/funcache"
 )
 
@@ -23,5 +24,12 @@ func UseWithCache() {
 	}
 	wrapper := funcache.CacheFunWithLru(128, wrapped, 3) // similar to use CacheFunWithLfu or CacheFunWithArc
 
-	wrapper([]interface{}{1, 2, 3}) // equal someExpensiveFun(1,2,3)
+	_, err := wrapper([]interface{}{1, 2, 3}) // equal someExpensiveFun(1,2,3)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+
+func main() {
+	UseWithCache()
 }
