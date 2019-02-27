@@ -5,6 +5,7 @@ cache result for function inspired by python's functools.lru_cache
 [![Coverage Status](https://coveralls.io/repos/github/FelixSeptem/funcache/badge.svg?branch=master)](https://coveralls.io/github/FelixSeptem/funcache?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/FelixSeptem/funcache)](https://goreportcard.com/report/github.com/FelixSeptem/funcache)
 [![GoDoc](http://godoc.org/github.com/FelixSeptem/funcache?status.svg)](http://godoc.org/github.com/FelixSeptem/funcache)
+[![GolangCI](https://golangci.com/badges/github.com/FelixSeptem/funcache.svg)](https://golangci.com/r/github.com/FelixSeptem/funcache)
 
 ### Install
 ```go
